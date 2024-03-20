@@ -1,9 +1,39 @@
 version: '3.8'
 
 services:
+  db:
+    container_name: camagru-db
+    build:
+      context: ./mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root@123@123
+      MYSQL_DATABASE: camagru-db
+      MYSQL_USER: camagru-user
+      MYSQL_PASSWORD: test@123@123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-database:/var/lib/mysql
+    networks:
+      - app-network
+    
   server:
     container_name: camagru-server
     build: ./
     restart: always
     ports:
       - "80:80"
+    networks:
+      - app-network
+    volumes:
+      - upload-data:/var/www/html/app/uploads 
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-database:
+    driver: local
+  upload-data:
+    driver: local
