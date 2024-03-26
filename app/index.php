@@ -32,6 +32,10 @@
                         $homeController = new _Controller ();
                         $homeController->post ($_FILES['image']);
                     }
+                } else if ($controller_name == 'Logout'){
+                    require_once '/var/www/html/app/controllers/Logout.php';
+                    $homeController = new _Controller ();
+                    $homeController->post ();
                 }
                 else{
                     if (!empty ($_POST)){

@@ -15,11 +15,46 @@
 
 
     <h1>Welcome back <?= $decoded->username ?> </h1>
+    
+    <form method="post" action='/logout'>
+    <input type="submit" name="submit" value="Logout">
+    </form>
     <h2>Upload Image</h2>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="image">
         <input type="submit" name="submit" value="Upload">
     </form>
+    <h1>Take Photo</h1>
+    <video id="video" autoplay></video>
+    <button id="snap">Snap Photo</button>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <script>
+        // Access the webcam and display video stream
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                var video = document.getElementById('video');
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(function(err) {
+                console.log("An error occurred: " + err);
+            });
+
+        // Capture and display the photo when the snap button is clicked
+        document.getElementById('snap').addEventListener('click', function() {
+            var video = document.getElementById('video');
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            var imageData = canvas.toDataURL('image/png');
+
+            // Send the image data to a PHP script for processing or storage
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'process_photo.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('imageData=' + encodeURIComponent(imageData));
+        });
+    </script>
 
 <div>
     <?php

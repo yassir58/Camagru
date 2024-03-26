@@ -2,7 +2,6 @@
 
 require  '/var/www/html/app/vendor/autoload.php';
 
-
 $dotenv = Dotenv\Dotenv::createImmutable('/var/www/html/app');
 $dotenv->load();
 use Firebase\JWT\JWT;
@@ -35,3 +34,4 @@ function jwtDecode ($jwt_token){
         echo "Error: " . $e->getMessage();
     }
 }
+
