@@ -32,9 +32,9 @@ class _Controller {
     }
     public function post ($username, $email, $password){
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $err = $this->db->create_user ($username, $email, $hashed_password);
-        if ($err == 0){
-            $jwt_token = generateJwtToken($username, $email);
+        $user_id = $this->db->create_user ($username, $email, $hashed_password);
+        if ($user_id != -1){
+            $jwt_token = generateJwtToken($username, $email, $user_id);
             setcookie('jwt_token', $jwt_token, time() + (60 * 60 * 24), '/');
             header("Location: /");
             exit(); 

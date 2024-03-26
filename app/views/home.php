@@ -50,7 +50,7 @@
 
             // Send the image data to a PHP script for processing or storage
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'process_photo.php', true);
+            xhr.open('POST', '/process', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send('imageData=' + encodeURIComponent(imageData));
         });

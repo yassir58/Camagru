@@ -18,9 +18,10 @@ class Database {
         $sql = "INSERT INTO Users (username, email, password) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("sss", $username, $email, $password);
+        
 
         if ($stmt->execute())
-            return 0;
+            return $this->conn->insert_id;
         else 
             return -1;
         $stmt->close();

@@ -37,6 +37,12 @@
                     $homeController = new _Controller ();
                     $homeController->post ();
                 }
+                else if ($controller_name == 'Process'){
+                    require_once '/var/www/html/app/controllers/Process.php';
+                    $homeController = new _Controller ();
+                    $imageData = $homeController->process ();
+                    echo $imageData;
+                }
                 else{
                     if (!empty ($_POST)){
                        $status = $homeController->post ($_POST['email'], $_POST['password']);

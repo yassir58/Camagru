@@ -14,7 +14,6 @@ class _Controller {
         $algorithm = 'HS256';
         try{
             $this->decoded = JWT::decode($jwt_token, new Key($key, 'HS256'));
-            return $decoded;
         }catch (Exception $e){
             echo "Error: " . $e->getMessage();
         }

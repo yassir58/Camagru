@@ -29,7 +29,7 @@ class _Controller {
         if ($user)
         {
             if (password_verify ($password, $user->password)){
-                $jwt_token = generateJwtToken($user->username, $user->email);
+                $jwt_token = generateJwtToken($user->username, $user->email, $user->user_id);
                 setcookie('jwt_token', $jwt_token, time() + (60 * 60 * 24), '/');
                 header("Location: /");
                 exit(); 

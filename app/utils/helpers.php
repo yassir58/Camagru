@@ -7,11 +7,12 @@ $dotenv->load();
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-function generateJwtToken($username, $email) {
+function generateJwtToken($username, $email, $user_id) {
     $key = $_ENV['secret_key']; 
     $payload = array(
         "username" => $username,
         "email" => $email,
+        'user_id' => $user_id,
         "exp" => time() + (60 * 60 * 24 * 7),
     );
     try {
