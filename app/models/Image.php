@@ -20,6 +20,20 @@ class ImageModel {
         $stmt->close();
     }
 
+    public function AddComment ($image_id, $user, $comment_text){
+        $connection = $this->db->getConnection ();
+        $user_id = $user->user_id;
+        $sql = "INSERT INTO Comments (user_id, image_id, comment_text) VALUES (?, ?, ?)";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param("iis", $user_id, $image_id, $comment_text);
+        if ($stmt->execute() === TRUE) {
+            return 0;
+        } else {
+            return -1;
+        }
+        $stmt->close();
+    }
+
     public function getAllImages (){
         $connection = $this->db->getConnection ();
         $sql = "SELECT * FROM Images";

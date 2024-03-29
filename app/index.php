@@ -42,6 +42,12 @@
                     $homeController = new _Controller ();
                     $imageData = $homeController->process ();
                     echo $imageData;
+                }else if ($controller_name == 'Update'){
+                    require_once '/var/www/html/app/controllers/Update.php';
+                    $homeController = new _Controller ();
+                    $comment_text = $_POST['comment'];
+                    $image_id = $_GET['image_id'];
+                    $homeController->comment ($image_id, $comment_text);
                 }
                 else{
                     if (!empty ($_POST)){
