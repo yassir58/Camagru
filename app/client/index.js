@@ -24,11 +24,17 @@ class CommentModal extends HTMLElement {
         const cancelButton = document.createElement ('button');
         const form = document.createElement ('form');
         const textArea = document.createElement ('textarea');
+        const image_src = this.getAttribute ('src');
+        const image = document.createElement ('img');
+        const imageContainer = document.createElement ('div');
         const image_id = this.dataset.image_id
 
 
         console.log (image_id);
-        form.setAttribute ('action', `/update?image_id=${image_id}`)
+        image.src = image_src;
+        imageContainer.appendChild (image);
+        imageContainer.classList.add ('imageContainer');
+        form.setAttribute ('action', `/comment?image_id=${image_id}`)
         form.setAttribute ('method', 'post')
         form.setAttribute ('enctype', 'multipart/form-data')
         textArea.setAttribute ('name', 'comment')
@@ -38,10 +44,10 @@ class CommentModal extends HTMLElement {
         modalContainer.classList.add ('modalContainer');
         modalContent.classList.add ('modalContent');
         overlay.classList.add ('overlay')
-        modalContainer.style.width = '400px';
+        modalContainer.style.width = '700px';
         submitButton.style.padding = '10px 15px';
-        modalContainer.style.height = '180px';
-        form.classList.add ('commmentForm');
+        modalContainer.style.height = '500px';
+        form.classList.add ('commentForm');
         textArea.classList.add ('commentArea');
         cancelButton.classList.add ('darkButton');
         submitButton.classList.add ('secondaryBtn');
@@ -49,6 +55,7 @@ class CommentModal extends HTMLElement {
         cancelButton.innerText = 'cancel';
         cancelButton.style.width = '150px;'
         buttonContainer.classList.add ('buttonContainer');
+        buttonContainer.style.flexDirection = 'column';
         wrapper.classList.add ('smallBtn');
         style.rel = 'stylesheet';
         style.href = '/css/styles.css';
@@ -56,17 +63,18 @@ class CommentModal extends HTMLElement {
         link.href = 'https://css.gg/css';
 
         const closeModal = ()=>{
+            overlay.remove();
             modalContainer.remove ();
-            overlay.remove ();
         }
         overlay.addEventListener ('click', closeModal);
         cancelButton.addEventListener ('click', closeModal);
         wrapper.addEventListener ('click', ()=>{
             modalContainer.append (modalContent);
-            // document.getElementById('root').appendChild (overlay);
+            shadow.appendChild (overlay);
             document.getElementById ('root').appendChild (modalContainer);
         })
 
+        modalContent.appendChild (imageContainer);
         modalContent.appendChild (form);
         form.appendChild (textArea);
         buttonContainer.appendChild (submitButton);
@@ -141,14 +149,14 @@ class UploadModal extends HTMLElement {
 
 
         const closeModal = ()=>{
+            overlay.remove();
             modalContainer.remove ();
-            overlay.remove ();
         }
         overlay.addEventListener ('click', closeModal);
         cancelButton.addEventListener ('click', closeModal);
         wrapper.addEventListener ('click', ()=>{
-            modalContainer.append (modalContent);
-            shadow.append(overlay);
+            shadow.appendChild (overlay);
+            modalContainer.appendChild (modalContent);
             shadow.append (modalContainer);
         })
         uploadButton.addEventListener ('click', ()=>{
@@ -193,8 +201,47 @@ class  PostCard extends HTMLElement {
         const commentButton = document.createElement ('comment-modal');
         const cardHeader = document.createElement ('div')
         const image_id = this.getAttribute ('image_id')
+        const form = document.createElement ('form')
+        const likesCount = document.createElement ('p');
+        const commentsCount = document.createElement ('p');
+        const getComments = async () =>{
+            const data = await fetch (`/comments.php?image_id=${image_id}`).then (res=>res.json()).then(data=>{
+                console.log (data.length)
+                commentsCount.innerText = data.length;
 
+                
+            } );
+            return data;
+        }
+        commentButton.setAttribute('src', source);
+        const getLikes = async () =>{
+            const data = await fetch (`/likes.php?image_id=${image_id}`).then (res=>res.json ()).then (data=>{
+                console.log (data.length)
+                likesCount.innerText = data.length;
 
+            });
+            return data;
+        }
+
+        const isLiked  = async ()=> {
+            await fetch (`/isLiked.php?image_id=${image_id}`).then(res=>res.json()).then(data=>{
+                if (data == true)
+                {
+                    likeButton.style.color ='red';
+                    likeButton.setAttribute('disabled', true);
+                }
+
+            })
+        }
+
+        const comments = getComments ();
+        const likes = getLikes ();
+        isLiked ();
+        form.method  = 'post'
+        form.setAttribute ('enctype', 'multipart/form-data')
+        form.action =   `/like?image_id=${image_id}`
+        likeButton.type = 'submit';
+        form.appendChild (likeButton)
         commentButton.dataset.image_id = image_id
         link.rel='stylesheet';
         link.href = 'https://css.gg/css';
@@ -202,8 +249,10 @@ class  PostCard extends HTMLElement {
         likeButton.classList.add ('smallBtn');
         likeButton.innerHTML = '<i class="gg-heart"></i>'
         cardHeader.classList.add ('cardHeader')
-        cardHeader.appendChild (likeButton)
+        cardHeader.appendChild (form)
+        cardHeader.appendChild (likesCount)
         cardHeader.appendChild (commentButton)
+        cardHeader.appendChild (commentsCount)
         cardOverlay.appendChild (cardHeader);
         style.rel = 'stylesheet';
         style.href = '/css/styles.css';
@@ -267,8 +316,8 @@ class SmallButton extends HTMLElement {
     video.classList.add ('video');
 
     const closeModal = ()=>{
+        overlay.remove();
         modalContainer.remove ();
-        overlay.remove ();
     }
     overlay.addEventListener ('click', closeModal);
     cancelButton.addEventListener ('click', closeModal);
@@ -281,8 +330,8 @@ class SmallButton extends HTMLElement {
         .catch(function(err) {
              console.log("An error occurred: " + err);
          });
+        shadow.append (overlay);
         modalContainer.append (modalContent);
-        shadow.append(overlay);
         shadow.append (modalContainer);
     })
 
@@ -304,7 +353,6 @@ snapButton.addEventListener('click', function() {
     modalContent.appendChild (video);
     modalContent.appendChild (buttonContainer);
     shadow.append (wrapper);
-    shadow.removeChild
     }
   }
 
@@ -314,3 +362,4 @@ snapButton.addEventListener('click', function() {
   customElements.define( 'small-button', SmallButton );
   customElements.define ('upload-modal', UploadModal);
   customElements.define ('search-form', SearchForm)
+  

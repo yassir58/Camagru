@@ -10,6 +10,11 @@ class _Controller {
 
     public function __construct (){
         $key = $_ENV['secret_key'];
+        if (!isset($_COOKIE['jwt_token']))
+        {
+            header("Location: /login");
+            exit();
+        }
         $jwt_token = $_COOKIE['jwt_token'];
         $algorithm = 'HS256';
         try{

@@ -42,12 +42,18 @@
                     $homeController = new _Controller ();
                     $imageData = $homeController->process ();
                     echo $imageData;
-                }else if ($controller_name == 'Update'){
-                    require_once '/var/www/html/app/controllers/Update.php';
+                }else if ($controller_name == 'Comment'){
+                    require_once '/var/www/html/app/controllers/Comment.php';
                     $homeController = new _Controller ();
                     $comment_text = $_POST['comment'];
                     $image_id = $_GET['image_id'];
                     $homeController->comment ($image_id, $comment_text);
+                }
+                else if ($controller_name ==  'Like'){
+                    require_once '/var/www/html/app/controllers/Like.php';
+                    $homeController = new _Controller ();
+                    $image_id = $_GET['image_id'];
+                    $homeController->like($image_id);
                 }
                 else{
                     if (!empty ($_POST)){
@@ -57,7 +63,9 @@
                        }
                     }
                 }
-             }else if ($controller_name == 'Home')
+             
+            }
+             else if ($controller_name == 'Home')
                 $homeController->middleware ();
             else
                 $homeController->index();

@@ -83,6 +83,11 @@
     transition: ease-in 300;
 }
 
+.borderGradiant {
+    border: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(254, 226, 181, 0) 6.12%, #00224D 24.34%, #FF204E 77.65%, rgba(254, 226, 181, 0) 94.98%);    
+    border-image-slice: 4;
+}
 .secondaryBtn:hover {
     background: #E5E7EBCC;
 }
@@ -134,13 +139,13 @@
 
 
 .overlay {
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     width:100vw;
     height:100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index:40; 
+    background-color: rgba(0, 0, 0, 0);
+    z-index:10; 
 }
 
 .cardHeader {
@@ -150,8 +155,13 @@
     width: 100%;
     gap:8px;
     padding:8px 14px;
+    margin-right: 12px;
 }
 
+.cardHeader p {
+    color: #E5E7EB;
+    font-size: 13px;
+}
 
 .cardOverlay {
     position:absolute;
@@ -171,7 +181,7 @@
 
 .modalContainer {
     box-shadow: 0 0 0 50vmax rgba(0,0,0,.8);
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -219,10 +229,10 @@
     position: relative;
     width: 100vw;
     height: 90px;
-    background: rgb(255,32,78);
-    background: -moz-linear-gradient(326deg, rgba(255,32,78,1) 0%, rgba(255,83,80,1) 40%, rgba(255,244,85,1) 100%);
-    background: -webkit-linear-gradient(326deg, rgba(255,32,78,1) 0%, rgba(255,83,80,1) 40%, rgba(255,244,85,1) 100%);
-    background: linear-gradient(326deg, rgba(255,32,78,1) 0%, rgba(255,83,80,1) 40%, rgba(255,244,85,1) 100%);
+    background: #5F5D9C;
+    background: -moz-linear-gradient(326deg, #5F5D9C 0%, #ff204e 40%, #fff455 100%);
+    background: -webkit-linear-gradient(326deg, #5F5D9C 0%, #ff204e 40%, #fff455 100%);
+    background: linear-gradient(326deg, #5F5D9C 0%, #ff204e 40%, #fff455 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff204e",endColorstr="#fff455",GradientType=1); 
 }
 .buttonContainer {
@@ -252,7 +262,7 @@
 
 .commentArea {
     width: 380px;
-    height: 120px;
+    height: 100px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border: none;
     outline: none;
@@ -300,4 +310,104 @@
     justify-content: center;
     align-items: center;
     gap:10px;
+}
+
+.authContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 100vh;
+}
+
+.authContainer form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.commentForm {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    gap:15px;
+}
+.commentForm button {
+    width: 180px !important;
+}
+.commentForm textarea {
+    width: 400px;
+    position: relative;
+
+}
+.authContainer input {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 5px;
+    outline: none;
+    background: #E5E7EB;
+    font-size: 16px;
+    border-bottom: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(254, 226, 181, 0) 6.12%, #00224D 24.34%, #FF204E 77.65%, rgba(254, 226, 181, 0) 94.98%);    
+    border-image-slice: 1;   
+    width: 500px;
+}
+
+.authContainer input::placeholder {
+    color: #6C727F;
+    font-style: italic;
+}
+
+.authContainer button {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 5px;
+    background: #121826;
+    color: #E5E7EB ;
+    cursor: pointer;
+    font-weight: 700;
+    width: 500px;
+}
+
+.authContainer button:hover {
+    background: #121826d8;
+}
+
+.authContainer p {
+    color: #6C727F;
+    font-size: 15px;
+}
+
+.authContainer a {
+    color: #6C727F;
+    font-weight: 700;
+    text-decoration: none;
+}
+.authContainer a:hover {
+    color: #121826;
+}
+
+.authContainer h1 {
+    color: #121826;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.imageContainer {
+   position: relative;
+   width: 90%;
+   border-radius: 12px;
+   height: 150px;
+   margin: 15px auto;
+    overflow: hidden;
+}
+
+.imageContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

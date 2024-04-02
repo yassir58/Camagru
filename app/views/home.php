@@ -23,7 +23,7 @@
                 UnslashBox
             </a>
            <div class="nav">
-           <button class='primaryBtn'><?= $decoded->username ?></button>
+           <button class='primaryBtn borderGradiant'><?= $decoded->username ?></button>
             <small-button></small-button>  
             <upload-modal></upload-modal>
             <form method="post" action='/logout'>
@@ -42,9 +42,7 @@
         $imageModel = new ImageModel ();
         $images = $imageModel->getAllImages();
         foreach ($images as $image){
-            // echo "<div class='image-item'>";
             echo "<post-card image_id='" . $image["image_id"] . "' src='" . $image["image_url"] . "' alt='Image' ></post-card>";
-            // echo "</div>";
         }
     ?>
 </div>  

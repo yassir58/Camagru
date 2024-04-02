@@ -29,7 +29,10 @@ class _Controller {
         $user = $this->decoded;
         $err = $imageModel->addComment ($image_id, $user, $comment_text);
         if ($err == 0)
-            echo 'comment create successfully' . $image_id;
+        {
+            header("Location: /");
+            exit();
+        }
         else
             echo 'Err: failed to create comment' ;
     }
